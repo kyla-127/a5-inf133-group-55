@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Digital Assistant</h1>
+  </header>
+  <main class="grid-container">
+
+
+    <!-- Task Section -->
+    <section id="task-manager" class="grid-item">
+      <h2>Tasks</h2>
+      <textarea id="task-input" placeholder="Add tasks here..."></textarea>
+      <button id="save-tasks">Save Tasks</button>
+      <p id="task-output"></p>
+    </section>
+
+    <!-- Notes Section -->
+    <section id="notes-section" class="grid-item">
+      <h2>Notes</h2>
+      <textarea id="notes-area" placeholder="Write your notes here..."></textarea>
+      <button id="save-notes">Save Notes</button>
+    </section>
+
+    <!-- Clock Section -->
+    <section id="clock-section" class="grid-item">
+      <h2>Clock</h2>
+      <div id="clock-display"></div>
+    </section>
+
+    <!-- Weather Section -->
+    <section id="weather-section" class="grid-item">
+        <h2>Weather in Irvine, CA</h2>
+        <button id="get-weather-button">Get Weather</button>
+        <div id="weather-display"></div>
+      </section>
+           
+  </main>
+  <footer>
+    <p>&copy; INF 133 Final Project: Digital Assistant</p>
+  </footer>
+  <script src="scripts.js"></script>
+</body>
+</html>
