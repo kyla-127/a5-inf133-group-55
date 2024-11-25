@@ -22,13 +22,11 @@ saveNotesButton.addEventListener('click', () => {
 
 notesArea.value = localStorage.getItem('notes') || '';
 
-// Clock Section
 const clockDisplay = document.getElementById('clock-display');
 
 function updateClock() {
   const now = new Date();
 
-  // Format the date
   const date = now.toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -36,14 +34,12 @@ function updateClock() {
     day: 'numeric',
   });
 
-  // Format the time
   const time = now.toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
   });
 
-  // Combine date and time
   clockDisplay.textContent = `${date}, ${time}`;
 }
 
@@ -52,21 +48,17 @@ updateClock();
 
 // Weather Section
 const weatherDisplay = document.getElementById('weather-display');
-const getWeatherButton = document.getElementById('get-weather-button');
+const apiKey = "891528aca01aedf1f09469fd71f6109a"; // Replace with your valid API key
 
-const apiKey = a88b28ccf510cea22d2d66650451d6 // Replace with your OpenWeatherMap API key
-
-// Function to fetch weather data for Irvine, California
 async function fetchWeather() {
   try {
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Irvine,US&appid=${apiKey}&units=metric`);
     
     if (!response.ok) {
-      throw new Error('Failed to fetch weather data');
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const data = await response.json();
-    
     const temperature = data.main.temp;
     const weatherDescription = data.weather[0].description;
     const humidity = data.main.humidity;
@@ -81,8 +73,10 @@ async function fetchWeather() {
     `;
   } catch (error) {
     console.error('Error fetching weather data:', error);
-    weatherDisplay.innerHTML = 'Failed to fetch weather data. Try again.';
+    weatherDisplay.innerHTML = `<p>Failed to fetch weather data: ${error.message}</p>`;
   }
 }
 
-getWeatherButton.addEventListener('click', fetchWeather);
+// Fetch weather data on page load
+fetchWeather();
+
