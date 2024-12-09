@@ -7,7 +7,7 @@ body {
   }
   
   header {
-    background: #83e1c7;
+    background: #FFC5D3;
     color: #fff;
     text-align: center;
     padding: 1rem 0;
@@ -32,11 +32,11 @@ body {
   
   h2 {
     margin-bottom: 0.5rem;
-    color: #83e1c7;
+    color: #FFC5D3;
   }
   
   button {
-    background-color: #83e1c7;
+    background-color: #FFC5D3;
     color: white;
     border: none;
     padding: 0.5rem 1rem;
