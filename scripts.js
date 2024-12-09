@@ -1,27 +1,79 @@
-// Task Manager
+// TASKS SECTION
 const taskInput = document.getElementById('task-input');
-const taskOutput = document.getElementById('task-output');
 const saveTasksButton = document.getElementById('save-tasks');
+const taskOutput = document.getElementById('task-output');
+const tasksList = document.createElement('ul'); // container to stack the tasks
+tasksList.style.listStyleType = "none";
+taskOutput.appendChild(tasksList);
 
-// Save and Load Tasks
-saveTasksButton.addEventListener('click', () => {
-  localStorage.setItem('tasks', taskInput.value);
-  taskOutput.textContent = taskInput.value;
+// load saved tasks from localStorage on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  savedTasks.forEach(task => addTaskToDOM(task));
 });
 
-taskOutput.textContent = localStorage.getItem('tasks') || '';
+// save task function
+saveTasksButton.addEventListener('click', () => {
+  const taskText = taskInput.value.trim();
+  if (taskText) {
+    addTaskToDOM(taskText);
+    saveTaskToLocalStorage(taskText); // Save to localStorage
+    taskInput.value = ''; // Clear the input 
+  }
+});
 
-// Notes Section
+// saving the task to the localstorage
+function saveTaskToLocalStorage(taskText) {
+  const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  savedTasks.push(taskText);
+  localStorage.setItem('tasks', JSON.stringify(savedTasks));
+}
+
+// adding tak to DOM
+function addTaskToDOM(taskText) {
+  const taskItem = document.createElement('li');
+  taskItem.textContent = taskText;
+
+  // adding completed button
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Completed';
+  deleteButton.style.marginLeft = '10px';
+  deleteButton.addEventListener('click', () => {
+    deleteTask(taskText, taskItem);
+  });
+
+  taskItem.appendChild(deleteButton);
+  tasksList.appendChild(taskItem);
+}
+
+//delete task funciton, but still does not work
+function deleteTask(taskText, taskItem) {
+  const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  const updatedTasks = savedTasks.filter(task => task !== taskText);
+  localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+  tasksList.removeChild(taskItem);
+}
+
+// NOTES SECTION
 const notesArea = document.getElementById('notes-area');
 const saveNotesButton = document.getElementById('save-notes');
 
+// save note function
 saveNotesButton.addEventListener('click', () => {
-  localStorage.setItem('notes', notesArea.value);
-  alert('Notes saved!');
+  const noteText = notesArea.value.trim();
+  localStorage.setItem('note', noteText);
+  alert('Note saved!'); // pop up that the note has been saved
 });
 
-notesArea.value = localStorage.getItem('notes') || '';
+// Load the single saved note on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const savedNote = localStorage.getItem('note');
+  if (savedNote) {
+    notesArea.value = savedNote;
+  }
+});
 
+// this function is to display the clock and weather api
 const clockDisplay = document.getElementById('clock-display');
 
 function updateClock() {
@@ -46,9 +98,9 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// Weather Section
+
 const weatherDisplay = document.getElementById('weather-display');
-const apiKey = "891528aca01aedf1f09469fd71f6109a"; // Replace with your valid API key
+const apiKey = "891528aca01aedf1f09469fd71f6109a"; 
 
 async function fetchWeather() {
   try {
@@ -69,7 +121,6 @@ async function fetchWeather() {
       <p>Temperature: ${temperature}°C</p>
       <p>Description: ${weatherDescription}</p>
       <p>Humidity: ${humidity}%</p>
-      <p>Wind Speed: ${windSpeed} m/s</p>
     `;
   } catch (error) {
     console.error('Error fetching weather data:', error);
@@ -77,6 +128,26 @@ async function fetchWeather() {
   }
 }
 
-// Fetch weather data on page load
+
 fetchWeather();
 
+// this segment is used to call the random dog image generator api
+const fetchDogButton = document.getElementById('fetch-dog');
+const dogImage = document.getElementById('dog-image');
+
+fetchDogButton.addEventListener('click', async () => {
+  try {
+    const response = await fetch('https://dog.ceo/api/breeds/image/random');
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    dogImage.src = data.message;
+    dogImage.style.display = 'block';
+  } catch (error) {
+    console.error('Error fetching dog image:', error);
+    alert('Failed to fetch a dog image. Please try again later.');
+  }
+});
