@@ -3,25 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Assistant</title>
+  <title>Notes</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <nav>
-      <div class="navbar">
-          <div class="nav-container">
-              <input class="checkbox" type="checkbox" id="menu-toggle" />
-              <div class="hamburger-lines">
-                  <span class="line line1"></span>
-                  <span class="line line2"></span>
-                  <span class="line line3"></span>
-              </div>  
-              <ul class="menu-items">
-                  <li><a href="finalproject.html">Home</a></li>
-                  <li><a href="tasks.html">Tasks</a></li> 
-                  <li><a href="notes.html">Notes</a></li> 
-              </ul>
-          </div>
+    <div class="navbar">
+      <div class="nav-container">
+        <input class="checkbox" type="checkbox" id="menu-toggle" />
+        <div class="hamburger-lines">
+          <span class="line line1"></span>
+          <span class="line line2"></span>
+          <span class="line line3"></span>
+        </div>  
+        <ul class="menu-items">
+          <li><a href="finalproject.html">Home</a></li>
+          <li><a href="tasks.html">Tasks</a></li> 
+          <li><a href="notes.html">Notes</a></li> 
+        </ul>
       </div>
+    </div>
   </nav>
-<body>
+
+  <main class="notes-page">
+    <section id="notes-section-page" class="notes-center">
+      <h2>Notes</h2>
+      <textarea id="notes-area-page" placeholder="Write your notes here..." style="height: 150px; width: 100%;"></textarea>
+      <button id="save-notes-page">Save Notes</button>
+      <p id="saved-notes-output"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; INF 133 Final Project: Digital Assistant</p>
+  </footer>
+
+  <script>
+    // save notes funciton
+    const notesAreaPage = document.getElementById('notes-area-page');
+    const saveNotesPageButton = document.getElementById('save-notes-page');
+    const savedNotesOutput = document.getElementById('saved-notes-output');
+    saveNotesPageButton.addEventListener('click', () => {
+      localStorage.setItem('notes', notesAreaPage.value);
+      savedNotesOutput.textContent = `Saved Note: ${notesAreaPage.value}`;
+    });
+    notesAreaPage.value = localStorage.getItem('notes') || '';
+    if (notesAreaPage.value) {
+      savedNotesOutput.textContent = `Saved Note: ${notesAreaPage.value}`;
+    }
+  </script>
+</body>
+</html>
