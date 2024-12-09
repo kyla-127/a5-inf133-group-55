@@ -31,7 +31,7 @@
   <main class="grid-container">
 
 
-    <!-- Task Section -->
+    <!-- task Section -->
     <section id="task-manager" class="grid-item">
       <h2>Tasks</h2>
       <textarea id="task-input" placeholder="Add tasks here..."></textarea>
@@ -46,21 +46,22 @@
       <button id="save-notes">Save Notes</button>
     </section>
 
-    <!-- Combined Clock and Weather Section -->
+    <!-- clock and weathe section -->
     <section id="clock-weather-section" class="grid-item">
       <h2>Clock & Weather</h2>
       <div id="clock-display"></div>
       <div id="weather-display"></div>
     </section>
 
-    <!-- Spotify -->
-    <section id="spotify-section" class="grid-item">
-      <h2>Spotify Player</h2>
-      <button id="spotify-login">Login to Spotify</button>
-      <div id="spotify-player"></div>
-    </section>
 
-           
+  <!-- dog api to fetch random dog images -->
+  <section id="random-dog-section" class="grid-item">
+    <h2>Random Dog</h2>
+    <button id="fetch-dog">Fetch a Dog!</button>
+    <div id="dog-image-container">
+      <img id="dog-image" alt="Random Dog" style="max-width: 100%; height: auto; display: none;">
+    </div>
+  </section>
   </main>
   <footer>
     <p>&copy; INF 133 Final Project: Digital Assistant</p>
