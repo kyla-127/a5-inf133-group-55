@@ -3,25 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Assistant</title>
+  <title>Tasks</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <nav>
-      <div class="navbar">
-          <div class="nav-container">
-              <input class="checkbox" type="checkbox" id="menu-toggle" />
-              <div class="hamburger-lines">
-                  <span class="line line1"></span>
-                  <span class="line line2"></span>
-                  <span class="line line3"></span>
-              </div>  
-              <ul class="menu-items">
-                  <li><a href="finalproject.html">Home</a></li>
-                  <li><a href="tasks.html">Tasks</a></li> 
-                  <li><a href="notes.html">Notes</a></li> 
-              </ul>
-          </div>
+    <div class="navbar">
+      <div class="nav-container">
+        <input class="checkbox" type="checkbox" id="menu-toggle" />
+        <div class="hamburger-lines">
+          <span class="line line1"></span>
+          <span class="line line2"></span>
+          <span class="line line3"></span>
+        </div>  
+        <ul class="menu-items">
+          <li><a href="finalproject.html">Home</a></li>
+          <li><a href="tasks.html">Tasks</a></li> 
+          <li><a href="notes.html">Notes</a></li> 
+        </ul>
       </div>
+    </div>
   </nav>
-<body>
+
+  <main class="tasks-page">
+    <section id="task-manager-page" class="grid-item larger-tasks-section">
+      <h2>Tasks</h2>
+      <textarea id="task-input-page" placeholder="Add tasks here..." style="height: 150px;"></textarea>
+      <button id="save-tasks-page">Save Task</button>
+      <ul id="tasks-list"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; INF 133 Final Project: Digital Assistant</p>
+  </footer>
+
+  <script>
+    const taskInputPage = document.getElementById('task-input-page');
+    const saveTasksPageButton = document.getElementById('save-tasks-page');
+    const tasksList = document.getElementById('tasks-list');
+
+    // this listener loads and saves files from
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      savedTasks.forEach(task => addTaskToDOM(task));
+    });
+    // this button saves the tasks
+    saveTasksPageButton.addEventListener('click', () => {
+      const taskText = taskInputPage.value.trim();
+      if (taskText) {
+        addTaskToDOM(taskText); 
+        saveTaskToLocalStorage(taskText);
+        taskInputPage.value = '';
+      }
+    });
+    function saveTaskToLocalStorage(taskText) {
+      const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      savedTasks.push(taskText);
+      localStorage.setItem('tasks', JSON.stringify(savedTasks));
+    }
+    function addTaskToDOM(taskText) {
+      const taskItem = document.createElement('li');
+      taskItem.className = 'task-item';
+      taskItem.textContent = taskText;
+
+      // this creates a completed/delete button 
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Completed';
+      deleteButton.className = 'delete-task';
+      deleteButton.addEventListener('click', () => {
+        deleteTask(taskText, taskItem);
+      });
+
+      taskItem.appendChild(deleteButton);
+      tasksList.appendChild(taskItem);
+    }
+    function deleteTask(taskText, taskItem) {
+      const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      const updatedTasks = savedTasks.filter(task => task !== taskText);
+      localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+      tasksList.removeChild(taskItem);
+    }
+  </script>
+</body>
+</html>
