@@ -13,8 +13,6 @@ This web application is used as a digital assistant for users to create notes an
 
 ## Authors
 
-Contributors names
-
 Kyla Goff-Tutson and Cecilia O’Grady
 
 ## Version History
