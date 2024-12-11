@@ -13,10 +13,9 @@ This web application is used as a digital assistant for users to create notes an
 
 ## Authors
 
-Contributors names and contact info
+Contributors names
 
-Kyla Goff-Tutson
-Cecilia O’Grady
+Kyla Goff-Tutson and Cecilia O’Grady
 
 ## Version History
 
